@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
                         Made with ❤️ for Microsoft AI-900 Certification Aspirants
                     </p>
                     <p className="footer-contact">
-                        📧 Contact: <a href="mailto:haobv@fpt.com">haobv@fpt.com</a>
+                        📧 Contact: <a href="mailto:vinh.nguyenthanhdn@gmail.com">vinh.nguyenthanhdn@gmail.com</a>
                     </p>
                     <p className="footer-version">version: 1.0.1</p>
                 </div>

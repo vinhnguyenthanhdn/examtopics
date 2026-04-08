@@ -25,22 +25,39 @@ function parseQuestions(filePath) {
             if (!questionNumMatch) continue;
             const questionId = questionNumMatch[1];
 
-            let questionTextMatch = block.match(/\[All AI-900 Questions\]\s*\n\n([\s\S]*?)\n\s*(Suggested Answer:|A\.|B\.|C\.|D\.|HOTSPOT|DRAG DROP|\*\*Answer:)/);
-            if (!questionTextMatch) {
-                questionTextMatch = block.match(/\[All AI-900 Questions\]\s*\n\n([\s\S]*?)\n\s*\*\*/);
+            // Enhanced extraction for HOTSPOT/DRAG DROP
+            let questionText = "";
+            const hotspotStart = block.indexOf('HOTSPOT -');
+            const dragdropStart = block.indexOf('DRAG DROP -');
+            const startIdx = (hotspotStart !== -1 && (dragdropStart === -1 || hotspotStart < dragdropStart)) ? hotspotStart : dragdropStart;
+
+            if (startIdx !== -1) {
+                // If it's a special type, take everything from that prefix until the Answer section
+                const endIdx = block.search(/\n\s*(\*\*Answer:|Suggested Answer:)/);
+                if (endIdx !== -1) {
+                    questionText = block.substring(startIdx, endIdx).trim();
+                } else {
+                    questionText = block.substring(startIdx).trim();
+                }
+            } else {
+                // Regular question extraction
+                let questionTextMatch = block.match(/\[All AI-900 Questions\]\s*\n\n([\s\S]*?)\n\s*(Suggested Answer:|A\.|B\.|C\.|D\.|HOTSPOT|DRAG DROP|\*\*Answer:)/);
+                if (!questionTextMatch) {
+                    questionTextMatch = block.match(/\[All AI-900 Questions\]\s*\n\n([\s\S]*?)\n\s*\*\*/);
+                }
+                if (questionTextMatch) {
+                    questionText = questionTextMatch[1].trim();
+                }
             }
 
-            if (!questionTextMatch) {
+            if (!questionText) {
                 console.warn(`⚠️ Skipping question ${questionId}: Could not extract question text`);
                 continue;
             }
 
-            let questionText = questionTextMatch[1].trim();
-            if (block.includes("HOTSPOT -")) questionText = "HOTSPOT - " + questionText;
-            if (block.includes("DRAG DROP -")) questionText = "DRAG DROP - " + questionText;
-
+            // Ensure images are preserved if not already in questionText
             const imageMatch = block.match(/!\[Question Image\]\((.*?)\)/);
-            if (imageMatch) {
+            if (imageMatch && !questionText.includes(imageMatch[0])) {
                 questionText += `\n\n![Question Image](${imageMatch[1]})`;
             }
 
@@ -80,8 +97,13 @@ function parseQuestions(filePath) {
             }
 
             if (!correctAnswer) {
-                console.warn(`⚠️ Question ${questionId}: Could not find any answer, skipping. Raw block snippet: ${block.substring(0, 100).replace(/\n/g, ' ')}...`);
-                continue;
+                const isSpecial = questionText.includes('HOTSPOT') || questionText.includes('DRAG DROP');
+                if (isSpecial) {
+                    correctAnswer = "HOTSPOT_REVIEW";
+                } else {
+                    console.warn(`⚠️ Question ${questionId}: Could not find any answer, setting to 'TBA'.`);
+                    correctAnswer = "TBA";
+                }
             }
 
             const discussionMatch = block.match(/\[View on ExamTopics\]\((https:\/\/www\.examtopics\.com\/[^\)]+)\)/);
