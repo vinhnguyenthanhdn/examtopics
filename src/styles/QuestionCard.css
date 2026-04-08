@@ -39,6 +39,15 @@
     color: var(--color-text-primary);
 }
 
+.markdown-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: var(--space-lg) auto;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 .multiselect-badge {
     display: inline-block;
     padding: var(--space-xs) var(--space-md);
@@ -148,5 +157,44 @@
 
     .question-text p {
         font-size: 1rem;
+    }
+}
+
+/* HOTSPOT Specific Styles */
+.hotspot-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+.hotspot-row-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.hotspot-row-extra {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-sm);
+}
+
+.btn-outline-info {
+    background: transparent !important;
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-outline-info:hover {
+    background: var(--color-primary-light) !important;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .hotspot-row-main {
+        grid-template-columns: 1fr;
     }
 }

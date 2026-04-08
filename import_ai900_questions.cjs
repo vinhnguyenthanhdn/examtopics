@@ -55,9 +55,13 @@ function parseQuestions(filePath) {
                 continue;
             }
 
-            // Ensure images are preserved if not already in questionText
+            // Ensure images are separated by newlines
+            const imageRegex = /(!\[Question Image\]\(.*?\))/g;
+            questionText = questionText.replace(imageRegex, '\n\n$1\n\n');
+
+            // Handle images matched from outside questionText
             const imageMatch = block.match(/!\[Question Image\]\((.*?)\)/);
-            if (imageMatch && !questionText.includes(imageMatch[0])) {
+            if (imageMatch && !questionText.includes(imageMatch[1])) {
                 questionText += `\n\n![Question Image](${imageMatch[1]})`;
             }
 

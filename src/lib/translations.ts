@@ -120,6 +120,18 @@ const translations: Translations = {
         vi: 'Đăng xuất',
         en: 'Sign Out',
     },
+    btn_understood: {
+        vi: 'Đã hiểu',
+        en: 'Understood',
+    },
+    btn_not_understood: {
+        vi: 'Chưa rõ',
+        en: 'Need Review',
+    },
+    view_on_examtopics: {
+        vi: 'Xem thảo luận trên ExamTopics',
+        en: 'View on ExamTopics',
+    },
 };
 
 export function getText(language: Language, key: string): string {

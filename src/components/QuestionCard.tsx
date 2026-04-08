@@ -183,18 +183,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 </form>
             ) : (
                 <div className="hotspot-actions-container">
-                    <div className="action-buttons horizontal">
-                        {question.discussion_link && (
-                            <a 
-                                href={question.discussion_link} 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                className="btn btn-info"
-                                style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                {t('view_on_examtopics')}
-                            </a>
-                        )}
+                    <div className="hotspot-row-main">
                         <button 
                             type="button" 
                             className="btn btn-success" 
@@ -212,6 +201,19 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                             {t('btn_not_understood')}
                         </button>
                     </div>
+                    {question.discussion_link && (
+                        <div className="hotspot-row-extra">
+                            <a 
+                                href={question.discussion_link} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn btn-outline-info"
+                                style={{ width: '100%', maxWidth: '400px' }}
+                            >
+                                {t('view_on_examtopics')}
+                            </a>
+                        </div>
+                    )}
                 </div>
             )}
 
