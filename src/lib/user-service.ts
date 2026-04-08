@@ -34,7 +34,7 @@ export async function getUserProgress(userId: string): Promise<number | null> {
             .from('ai900_user_progress')
             .select('last_question_index')
             .eq('user_id', userId)
-            .single();
+            .maybeSingle();
 
         if (error) {
             if (error.code === 'PGRST116') {
@@ -67,7 +67,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
             .from('profiles')
             .select('*')
             .eq('id', userId)
-            .single();
+            .maybeSingle();
 
         if (error) {
             console.warn('Profile not found', error);

@@ -17,7 +17,7 @@ interface HFChatResponse {
 // Config for direct client-side calls (optimized for GitHub Pages)
 const HUGGINGFACE_API_KEY = import.meta.env.VITE_HUGGINGFACE_API_KEY || '';
 const HF_MODEL = import.meta.env.VITE_HF_MODEL || "meta-llama/Llama-3.1-70B-Instruct";
-const API_URL = `https://router.huggingface.co/hf-inference/v1/chat/completions`;
+const API_URL = `https://api-inference.huggingface.co/v1/chat/completions`;
 
 async function callHuggingFaceAPI(prompt: string): Promise<string> {
     if (!HUGGINGFACE_API_KEY) {
