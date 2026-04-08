@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: './',
+    base: '/examtopics/',
     plugins: [
         react(),
         VitePWA({
@@ -17,8 +17,8 @@ export default defineConfig({
                 theme_color: '#3b82f6',
                 background_color: '#ffffff',
                 display: 'standalone',
-                scope: './',
-                start_url: './',
+                scope: '/examtopics/',
+                start_url: '/examtopics/',
                 orientation: 'portrait',
                 icons: [
                     {
