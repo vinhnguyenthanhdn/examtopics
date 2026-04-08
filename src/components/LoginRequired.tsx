@@ -14,7 +14,7 @@ export const LoginRequired: React.FC<LoginRequiredProps> = ({ language }) => {
             await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.href.split('?')[0].split('#')[0],
+                    redirectTo: window.location.origin + window.location.pathname,
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'select_account',
