@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Question, Language } from '../types';
 import { getText } from '../lib/translations';
 import '../styles/QuestionCard.css';
@@ -33,7 +35,6 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 }) => {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
-    // Reset or restore selection when question changes
     useEffect(() => {
         if (userAnswer) {
             setSelectedOptions(userAnswer.split(''));
@@ -44,6 +45,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
     const t = (key: string) => getText(language, key);
     const isLoadingAI = !!loadingAction;
+
+    // Detect if this is a special question type (HOTSPOT or DRAG DROP)
+    const isHotspot = question.question.includes('HOTSPOT -') || 
+                      question.question.includes('DRAG DROP -') ||
+                      question.correct_answer === 'HOTSPOT_REVIEW';
 
     const handleOptionChange = (optionLetter: string) => {
         if (question.is_multiselect) {
@@ -64,6 +70,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         }
     };
 
+    const handleSpecialSubmit = (status: 'CORRECT' | 'INCORRECT') => {
+        // For HOTSPOT, we map "Understood" to the correct placeholder
+        if (status === 'CORRECT') {
+            onSubmit(question.correct_answer); // Mark as correct (HOTSPOT_REVIEW)
+        } else {
+            onSubmit('FAILED_REVIEW'); // Mark as incorrect
+        }
+    };
+
     const getOptionLetter = (option: string): string => {
         return option.split('.')[0].trim();
     };
@@ -71,16 +86,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     const isCorrect = userAnswer === question.correct_answer;
     const hasAnswered = !!userAnswer;
 
-    // Calculate Stats
+    // Stats calculation
     const totalAnswered = Object.keys(allUserAnswers).length;
     let correctCount = 0;
 
-    // Performance optimization: Create a map for fast lookup if needed, 
-    // but usually find is fast enough for <2000 items. 
-    // However, iterating userAnswers (smaller set) is better.
     Object.entries(allUserAnswers).forEach(([qId, ans]) => {
-        // find question by ID. 
-        // Note: questions are sorted or available.
         const q = allQuestions.find(q => q.id === qId);
         if (q && q.correct_answer === ans) {
             correctCount++;
@@ -107,109 +117,128 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 </div>
             </div>
 
-            {/* Stats Section */}
-            {/* Compact Stats Section */}
+            {/* Stats Dashboard */}
             <div className="stats-dashboard compact">
                 <div className="stat-group main">
                     <span className="stat-label-inline">Pass Rate:</span>
                     <span className="stat-value-inline highlight">{passRate}%</span>
                 </div>
-
                 <div className="stat-divider"></div>
-
                 <div className="stat-group details">
-                    <div className="stat-item-inline" title="Correct Answers">
+                    <div className="stat-item-inline">
                         <span className="dot correct"></span> {correctCount} Correct
                     </div>
-                    <div className="stat-item-inline" title="Incorrect Answers">
+                    <div className="stat-item-inline">
                         <span className="dot incorrect"></span> {incorrectCount} Incorrect
-                    </div>
-                    <div className="stat-item-inline" title="Unanswered Questions">
-                        <span className="dot pending"></span> {totalQuestions - totalAnswered} Left
                     </div>
                 </div>
             </div>
 
-            {/* Question Text */}
+            {/* Question Content */}
             <div className="question-text">
-                <p>{question.question}</p>
-                {question.is_multiselect && (
+                <div className="markdown-content">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {question.question}
+                    </ReactMarkdown>
+                </div>
+                {question.is_multiselect && !isHotspot && (
                     <span className="multiselect-badge">{t('select_multiple')}</span>
                 )}
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="question-form">
-                {/* Options */}
-                <div className="options-container">
-                    {question.options.map((option) => {
-                        const optionLetter = getOptionLetter(option);
-                        const isSelected = selectedOptions.includes(optionLetter);
+            {/* Interface for Regular vs HOTSPOT */}
+            {!isHotspot ? (
+                <form onSubmit={handleSubmit} className="question-form">
+                    <div className="options-container">
+                        {question.options.map((option) => {
+                            const optionLetter = getOptionLetter(option);
+                            const isSelected = selectedOptions.includes(optionLetter);
+                            return (
+                                <label key={optionLetter} className={`option-label ${isSelected ? 'selected' : ''}`}>
+                                    <input
+                                        type={question.is_multiselect ? 'checkbox' : 'radio'}
+                                        name="answer"
+                                        value={optionLetter}
+                                        checked={isSelected}
+                                        onChange={() => handleOptionChange(optionLetter)}
+                                        disabled={isLoadingAI}
+                                    />
+                                    <span className="option-text">{option}</span>
+                                </label>
+                            );
+                        })}
+                    </div>
 
-                        return (
-                            <label
-                                key={optionLetter}
-                                className={`option-label ${isSelected ? 'selected' : ''}`}
+                    <div className="action-buttons">
+                        <button type="button" className="btn btn-secondary" onClick={onRequestTheory} disabled={isLoadingAI}>
+                            {loadingAction === 'theory' ? t('loading_theory') : t('btn_theory')}
+                        </button>
+                        <button type="button" className="btn btn-secondary" onClick={onRequestExplanation} disabled={isLoadingAI}>
+                            {loadingAction === 'explanation' ? t('loading_explanation') : t('btn_explain')}
+                        </button>
+                        <button type="submit" className="btn btn-primary" disabled={selectedOptions.length === 0 || isLoadingAI}>
+                            {t('btn_submit')}
+                        </button>
+                    </div>
+                </form>
+            ) : (
+                <div className="hotspot-actions-container">
+                    <div className="action-buttons horizontal">
+                        {question.discussion_link && (
+                            <a 
+                                href={question.discussion_link} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn btn-info"
+                                style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             >
-                                <input
-                                    type={question.is_multiselect ? 'checkbox' : 'radio'}
-                                    name="answer"
-                                    value={optionLetter}
-                                    checked={isSelected}
-                                    onChange={() => handleOptionChange(optionLetter)}
-                                    className={question.is_multiselect ? 'checkbox' : 'radio'}
-                                    disabled={isLoadingAI}
-                                />
-                                <span className="option-text">{option}</span>
-                            </label>
-                        );
-                    })}
+                                {t('view_on_examtopics')}
+                            </a>
+                        )}
+                        <button 
+                            type="button" 
+                            className="btn btn-success" 
+                            onClick={() => handleSpecialSubmit('CORRECT')}
+                            disabled={hasAnswered}
+                        >
+                            {t('btn_understood')}
+                        </button>
+                        <button 
+                            type="button" 
+                            className="btn btn-danger" 
+                            onClick={() => handleSpecialSubmit('INCORRECT')}
+                            disabled={hasAnswered}
+                        >
+                            {t('btn_not_understood')}
+                        </button>
+                    </div>
                 </div>
+            )}
 
-                {/* Action Buttons */}
-                <div className="action-buttons">
-                    <button
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={onRequestTheory}
-                        disabled={isLoadingAI}
-                    >
-                        {loadingAction === 'theory' ? t('loading_theory') : t('btn_theory')}
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={onRequestExplanation}
-                        disabled={isLoadingAI}
-                    >
-                        {loadingAction === 'explanation' ? t('loading_explanation') : t('btn_explain')}
-                    </button>
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={selectedOptions.length === 0 || isLoadingAI}
-                    >
-                        {t('btn_submit')}
-                    </button>
-                </div>
-            </form>
-
-            {/* Answer Feedback */}
-            {hasAnswered && (
+            {/* Answer Feedback for Regular Questions */}
+            {hasAnswered && !isHotspot && (
                 <div className={`answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`}>
                     <div className="feedback-header">
                         {isCorrect ? t('correct') : t('incorrect')}
                     </div>
                     <div className="feedback-details">
-                        <div>
-                            <strong>{t('your_answer')}:</strong> {userAnswer}
-                        </div>
-                        {!isCorrect && (
-                            <div>
-                                <strong>{t('correct_answer')}:</strong> {question.correct_answer}
-                            </div>
-                        )}
+                        <div><strong>{t('your_answer')}:</strong> {userAnswer}</div>
+                        {!isCorrect && <div><strong>{t('correct_answer')}:</strong> {question.correct_answer}</div>}
                     </div>
+                </div>
+            )}
+
+            {/* Feedback for HOTSPOT */}
+            {hasAnswered && isHotspot && (
+                <div className={`answer-feedback ${userAnswer === question.correct_answer ? 'correct' : 'incorrect'}`}>
+                    <div className="feedback-header">
+                        {userAnswer === question.correct_answer ? t('correct') : t('incorrect')}
+                    </div>
+                    <p style={{ margin: '10px 0 0 0', fontSize: '0.9rem', opacity: 0.8 }}>
+                        {userAnswer === question.correct_answer 
+                            ? "Bạn đã đánh dấu là đã hiểu câu hỏi này." 
+                            : "Bạn đã đánh dấu cần xem lại câu hỏi này."}
+                    </p>
                 </div>
             )}
         </div>
