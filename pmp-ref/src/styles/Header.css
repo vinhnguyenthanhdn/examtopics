@@ -1,0 +1,167 @@
+.app-header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 10;
+}
+
+.header-content {
+    text-align: center;
+    position: relative;
+    /* Ensure stacking context */
+}
+
+.app-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    color: white;
+    line-height: 1.2;
+}
+
+.title-icon {
+    font-size: 3rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.app-subtitle {
+    font-size: 1.125rem;
+    opacity: 0.95;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Wrapper for Auth & History buttons */
+.header-controls {
+    position: absolute;
+    top: 0;
+    /* Align to top relative to header-content, but wait header-content has no height set? */
+    /* header-content is inside container, which allows it to flow. 
+       Usually header-controls was top: 1rem relative to .app-header?
+       Previous CSS had relative on .app-header.
+       Let's keep it absolute relative to .app-header if we can content-wise to match design.
+       But .header-content wrapper is better for responsiveness. 
+       Let's make .header-content static for desktop to let controls position relative to .app-header?
+       Or make .header-content relative and width 100%.
+    */
+    top: -1.5rem;
+    /* Pull it up a bit or keep it at top of container */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Re-enable pointer events for buttons */
+.header-controls>* {
+    pointer-events: auto;
+}
+
+.history-actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn-history {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-md);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    backdrop-filter: blur(4px);
+    font-family: var(--font-sans);
+}
+
+.btn-history:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+    transform: translateY(-1px);
+}
+
+.btn-history.active {
+    background: white;
+    color: var(--color-primary);
+    border-color: white;
+    font-weight: 700;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 768px) {
+    .app-header {
+        padding: var(--space-lg) 0;
+    }
+
+    .header-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-md);
+    }
+
+    /* 1. Title at Top */
+    .app-title {
+        order: 1;
+        font-size: 1.75rem;
+        flex-direction: column;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-xs);
+        position: static;
+        width: 100%;
+        text-align: center;
+    }
+
+    .title-icon {
+        font-size: 2rem;
+    }
+
+    /* 2. Subtitle */
+    .app-subtitle {
+        order: 2;
+        font-size: 1rem;
+        margin-bottom: var(--space-sm);
+        text-align: center;
+        width: 100%;
+    }
+
+    /* 3. Controls (Buttons/Icon) */
+    .header-controls {
+        /* Keep absolute positioning even on mobile to stay in corner */
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+        width: auto;
+        justify-content: flex-end;
+        pointer-events: none;
+        z-index: 20;
+    }
+
+    .header-controls>* {
+        pointer-events: auto;
+    }
+
+    /* 4. Language Selector */
+    /* Note: In React component, LanguageSelector is separate div */
+    .header-content>.language-selector {
+        order: 4;
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+    }
+}

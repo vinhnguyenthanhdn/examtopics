@@ -1,0 +1,196 @@
+/* AIContent.css - Typography with clear hierarchy */
+
+.ai-content {
+    margin-bottom: var(--space-xl);
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg-card) 100%);
+    border-left: 4px solid var(--color-primary);
+    animation: slideIn var(--transition-base);
+}
+
+/* Keep same style for both theory and explanation */
+.ai-content.theory {
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg-card) 100%);
+    border-left-color: var(--color-primary);
+}
+
+/* Dark mode overrides for AI content */
+@media (prefers-color-scheme: dark) {
+    .ai-content {
+        background: linear-gradient(135deg, hsl(210, 50%, 22%) 0%, var(--color-bg-card) 100%);
+    }
+
+    .ai-content.theory {
+        background: linear-gradient(135deg, hsl(210, 50%, 22%) 0%, var(--color-bg-card) 100%);
+    }
+}
+
+.ai-content-header {
+    margin-bottom: var(--space-lg);
+}
+
+.ai-content-header h3 {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+/* Keep same header color for both */
+.ai-content.theory .ai-content-header h3 {
+    color: var(--color-primary);
+}
+
+.ai-content-body {
+    line-height: 1.8;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+}
+
+.ai-content-footer {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.discussion-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.discussion-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* Loading Overlay */
+.ai-content-loading {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-content-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+/* Markdown Styles - Simple & Clean */
+
+/* Remove list styling */
+.markdown-body ol,
+.markdown-body ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.markdown-body li {
+    margin-bottom: 0.8em;
+    padding-left: 0;
+}
+
+/* HEADINGS - h2 and h3 for main sections */
+.markdown-body h2,
+.markdown-body h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.4;
+}
+
+/* First heading no top margin */
+.markdown-body>h2:first-child,
+.markdown-body>h3:first-child {
+    margin-top: 0;
+}
+
+/* Paragraphs */
+.markdown-body p {
+    margin-bottom: 0.8em;
+    line-height: 1.7;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+}
+
+/* Bold text - keep inline, just emphasize */
+.markdown-body strong {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: inherit;
+}
+
+/* Code blocks */
+.markdown-body code {
+    background: var(--color-bg-secondary);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+}
+
+/* Links */
+.markdown-body a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.markdown-body a:hover {
+    text-decoration: underline;
+}
+
+/* Blockquotes */
+.markdown-body blockquote {
+    margin: 1em 0;
+    padding-left: 1em;
+    border-left: 3px solid var(--color-primary);
+    color: var(--color-text-secondary);
+}
+
+/* Tables */
+.markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.markdown-body th,
+.markdown-body td {
+    padding: 0.5em;
+    border: 1px solid var(--color-border);
+    text-align: left;
+}
+
+.markdown-body th {
+    background: var(--color-bg-secondary);
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

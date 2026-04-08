@@ -1,0 +1,66 @@
+-- SQL to update correct_answer based on Suggested Answer from PMP_Full_1400.md
+-- Generated based on discrepancies found between 'Suggested Answer' and 'Answer'
+
+BEGIN;
+
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '63';
+UPDATE pmp_questions SET correct_answer = 'ABE', is_multiselect = TRUE WHERE id = '64';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '66';
+UPDATE pmp_questions SET correct_answer = 'BC', is_multiselect = TRUE WHERE id = '195';
+UPDATE pmp_questions SET correct_answer = 'DE', is_multiselect = TRUE WHERE id = '247';
+UPDATE pmp_questions SET correct_answer = 'AE', is_multiselect = TRUE WHERE id = '316';
+UPDATE pmp_questions SET correct_answer = 'BC', is_multiselect = TRUE WHERE id = '353';
+UPDATE pmp_questions SET correct_answer = 'ABE', is_multiselect = TRUE WHERE id = '358';
+UPDATE pmp_questions SET correct_answer = 'CE', is_multiselect = TRUE WHERE id = '361';
+UPDATE pmp_questions SET correct_answer = 'AD', is_multiselect = TRUE WHERE id = '366';
+UPDATE pmp_questions SET correct_answer = 'ABD', is_multiselect = TRUE WHERE id = '377';
+UPDATE pmp_questions SET correct_answer = 'BD', is_multiselect = TRUE WHERE id = '395';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '411';
+UPDATE pmp_questions SET correct_answer = 'AD', is_multiselect = TRUE WHERE id = '414';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '443';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '483';
+UPDATE pmp_questions SET correct_answer = 'DE', is_multiselect = TRUE WHERE id = '487';
+UPDATE pmp_questions SET correct_answer = 'BD', is_multiselect = TRUE WHERE id = '488';
+UPDATE pmp_questions SET correct_answer = 'BC', is_multiselect = TRUE WHERE id = '504';
+UPDATE pmp_questions SET correct_answer = 'CE', is_multiselect = TRUE WHERE id = '508';
+UPDATE pmp_questions SET correct_answer = 'BD', is_multiselect = TRUE WHERE id = '514';
+UPDATE pmp_questions SET correct_answer = 'ABC', is_multiselect = TRUE WHERE id = '515';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '536';
+UPDATE pmp_questions SET correct_answer = 'BD', is_multiselect = TRUE WHERE id = '540';
+UPDATE pmp_questions SET correct_answer = 'BD', is_multiselect = TRUE WHERE id = '546';
+UPDATE pmp_questions SET correct_answer = 'ACD', is_multiselect = TRUE WHERE id = '555';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '568';
+UPDATE pmp_questions SET correct_answer = 'DE', is_multiselect = TRUE WHERE id = '583';
+UPDATE pmp_questions SET correct_answer = 'CD', is_multiselect = TRUE WHERE id = '592';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '594';
+UPDATE pmp_questions SET correct_answer = 'AD', is_multiselect = TRUE WHERE id = '595';
+UPDATE pmp_questions SET correct_answer = 'CE', is_multiselect = TRUE WHERE id = '624';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '685';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '738';
+UPDATE pmp_questions SET correct_answer = 'AB', is_multiselect = TRUE WHERE id = '785';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '813';
+UPDATE pmp_questions SET correct_answer = 'BCD', is_multiselect = TRUE WHERE id = '851';
+UPDATE pmp_questions SET correct_answer = 'BC', is_multiselect = TRUE WHERE id = '862';
+UPDATE pmp_questions SET correct_answer = 'AD', is_multiselect = TRUE WHERE id = '882';
+UPDATE pmp_questions SET correct_answer = 'CE', is_multiselect = TRUE WHERE id = '897';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '902';
+UPDATE pmp_questions SET correct_answer = 'BCD', is_multiselect = TRUE WHERE id = '932';
+UPDATE pmp_questions SET correct_answer = 'ACD', is_multiselect = TRUE WHERE id = '959';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '981';
+UPDATE pmp_questions SET correct_answer = 'ABE', is_multiselect = TRUE WHERE id = '1030';
+UPDATE pmp_questions SET correct_answer = 'BC', is_multiselect = TRUE WHERE id = '1059';
+UPDATE pmp_questions SET correct_answer = 'ADE', is_multiselect = TRUE WHERE id = '1108';
+UPDATE pmp_questions SET correct_answer = 'BE', is_multiselect = TRUE WHERE id = '1174';
+UPDATE pmp_questions SET correct_answer = 'AB', is_multiselect = TRUE WHERE id = '1200';
+UPDATE pmp_questions SET correct_answer = 'BCE', is_multiselect = TRUE WHERE id = '1216';
+UPDATE pmp_questions SET correct_answer = 'BD', is_multiselect = TRUE WHERE id = '1225';
+UPDATE pmp_questions SET correct_answer = 'ABC', is_multiselect = TRUE WHERE id = '1242';
+UPDATE pmp_questions SET correct_answer = 'CD', is_multiselect = TRUE WHERE id = '1256';
+UPDATE pmp_questions SET correct_answer = 'ACE', is_multiselect = TRUE WHERE id = '1266';
+UPDATE pmp_questions SET correct_answer = 'DE', is_multiselect = TRUE WHERE id = '1330';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '1368';
+UPDATE pmp_questions SET correct_answer = 'AC', is_multiselect = TRUE WHERE id = '1388';
+UPDATE pmp_questions SET correct_answer = 'BC', is_multiselect = TRUE WHERE id = '1398';
+UPDATE pmp_questions SET correct_answer = 'CD', is_multiselect = TRUE WHERE id = '1414';
+
+COMMIT;

@@ -1,0 +1,94 @@
+.navigation {
+    margin: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
+    border-top: 2px solid var(--color-border);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.jump-form {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: stretch;
+}
+
+.jump-input {
+    width: 120px;
+    font-size: 16px;
+}
+
+.jump-form .btn {
+    min-width: 80px;
+    padding: var(--space-sm) var(--space-lg);
+}
+
+/* Next button highlight (Desktop + Base) */
+.nav-next:not(:disabled) {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .nav-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Target the buttons and form to set order */
+
+    /* Next button (Sau) - Order 1 & Strongly Highlighted */
+    .nav-buttons>.nav-next {
+        order: 1;
+        width: 100% !important;
+        background-color: var(--color-primary) !important;
+        color: white !important;
+        border-color: var(--color-primary) !important;
+        font-weight: 700 !important;
+        padding: var(--space-md) !important;
+        font-size: 1.1rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-buttons>.nav-next:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    /* Previous button (Trước) - Order 2 */
+    .nav-buttons>button:not(.nav-next) {
+        order: 2;
+        width: 100%;
+        margin-top: var(--space-xs);
+    }
+
+    /* Jump form (Câu số + Go) - Order 3 */
+    .jump-form {
+        order: 3;
+        width: 100%;
+        margin-top: var(--space-xs);
+    }
+
+    .jump-input {
+        width: auto;
+        flex: 1;
+        max-width: 120px;
+    }
+
+    .jump-form .btn {
+        flex: 1;
+        min-width: 100px;
+        font-size: 1rem;
+        font-weight: 600;
+        background: var(--color-bg-secondary);
+        color: var(--color-text-primary);
+        border: 1px solid var(--color-border);
+    }
+}
