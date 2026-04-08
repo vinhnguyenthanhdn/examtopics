@@ -32,12 +32,14 @@
     "@vercel/node": "^5.5.28",
     "@vitejs/plugin-react": "^5.1.2",
     "dotenv": "^17.4.1",
+    "prisma": "^6.19.3",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-pwa": "^1.2.0"
   },
   "dependencies": {
     "@huggingface/inference": "^4.13.11",
+    "@prisma/client": "^6.19.3",
     "@supabase/supabase-js": "^2.90.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
