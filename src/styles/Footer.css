@@ -1,0 +1,62 @@
+.app-footer {
+    background: var(--color-bg-secondary);
+    padding: var(--space-xl) 0;
+    margin-top: var(--space-2xl);
+    border-top: 2px solid var(--color-border);
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+    line-height: 1.5;
+}
+
+.footer-contact {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    word-break: break-all;
+    /* Ensure email doesn't overflow */
+}
+
+.footer-version {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-sm);
+    opacity: 0.6;
+}
+
+.footer-contact a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.footer-contact a:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 768px) {
+    .app-footer {
+        padding: var(--space-lg) 0;
+        margin-top: var(--space-lg);
+    }
+
+    .footer-text {
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+        /* Extra safe padding */
+    }
+
+    .footer-contact {
+        font-size: 0.85rem;
+    }
+}

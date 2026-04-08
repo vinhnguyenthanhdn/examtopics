@@ -1,0 +1,92 @@
+/* QuestionCard Stats Styling - Compact Version */
+.stats-dashboard.compact {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    margin-bottom: var(--space-xl);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.stat-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-label-inline {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.stat-value-inline {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+}
+
+.stat-value-inline.highlight {
+    color: var(--color-primary);
+}
+
+.stat-divider {
+    height: 1.25rem;
+    width: 1px;
+    background-color: var(--color-border);
+}
+
+.stat-group.details {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat-item-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.correct {
+    background-color: var(--color-success);
+}
+
+.dot.incorrect {
+    background-color: var(--color-error);
+}
+
+.dot.pending {
+    background-color: var(--color-text-tertiary);
+}
+
+@media (max-width: 600px) {
+    .stats-dashboard.compact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .stat-divider {
+        display: none;
+    }
+
+    .stat-group.details {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 0.85rem;
+    }
+}

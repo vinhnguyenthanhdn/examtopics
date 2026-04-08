@@ -1,0 +1,50 @@
+{
+  "name": "ai900-exam-master",
+  "version": "1.0.0",
+  "description": "Microsoft Azure AI Fundamentals (AI-900) Practice Quiz Application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinhnguyenthanhdn/examtopics.git"
+  },
+  "keywords": [
+    "ai-900",
+    "azure",
+    "ai-fundamentals",
+    "certification",
+    "quiz",
+    "exam-prep"
+  ],
+  "author": "Vinh Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinhnguyenthanhdn/examtopics/issues"
+  },
+  "homepage": "https://vinhnguyenthanhdn.github.io/examtopics/",
+  "devDependencies": {
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "@vercel/node": "^5.5.28",
+    "@vitejs/plugin-react": "^5.1.2",
+    "dotenv": "^17.4.1",
+    "gh-pages": "^6.3.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-pwa": "^1.2.0"
+  },
+  "dependencies": {
+    "@huggingface/inference": "^4.13.11",
+    "@supabase/supabase-js": "^2.90.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  }
+}

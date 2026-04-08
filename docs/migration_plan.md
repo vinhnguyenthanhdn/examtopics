@@ -32,7 +32,8 @@ The project will share the same Supabase backend with PMP to reuse user data, bu
 - **GitHub Action**: Create `.github/workflows/deploy.yml` for automated deployment to the `gh-pages` branch.
 
 ## 5. Data Migration
-- **AI-900 Parser**: Create a Python script to parse `ai-900_questions.md` and upload data to the `ai900_questions` table.
+- **AI-900 Parser**: Create a Node.js/Python script to parse `ai-900_questions.md` and upload data to the `ai900_questions` table.
+- **Parsing Logic**: Parse both "Suggested Answer:" and "Answer:" from the markdown. Store both in the database, but use "Suggested Answer:" as the primary correct answer for the quiz.
 - **Validation**: Ensure all 700+ lines/questions are correctly formatted and imported.
 
 ## 6. Authentication Integration

@@ -1,0 +1,259 @@
+.admin-container {
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: var(--color-text-primary);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.admin-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--color-bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-primary);
+}
+
+.stat-label {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.users-table-container {
+    background-color: var(--color-bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.users-table th,
+.users-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.users-table th {
+    background-color: var(--color-bg-secondary);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    /* Prevent headers from wrapping too much */
+}
+
+/* Ensure actions column doesn't wrap weirdly */
+.users-table td:last-child {
+    white-space: nowrap;
+}
+
+.users-table tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge.approved {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+}
+
+.status-badge.pending {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #d97706;
+}
+
+.role-badge {
+    text-transform: capitalize;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.role-badge.admin {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.action-btn {
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 0.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-approve {
+    background-color: var(--color-success);
+    color: white;
+}
+
+.btn-approve:hover {
+    background-color: hsl(142, 76%, 32%);
+    transform: translateY(-1px);
+}
+
+.btn-reject {
+    background-color: var(--color-error);
+    color: white;
+}
+
+.btn-reject:hover {
+    background-color: hsl(0, 84%, 50%);
+    transform: translateY(-1px);
+}
+
+.btn-revoke {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.btn-revoke:hover {
+    background-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary-light);
+}
+
+.loading-container {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 0 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .admin-title {
+        font-size: 1.5rem;
+    }
+
+    .admin-stats {
+        grid-template-columns: 1fr 1fr;
+        /* 2 columns on mobile */
+        gap: 0.5rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    /* Table Optimization for Mobile */
+    .users-table th,
+    .users-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* Hide less important columns on very small screens if needed, 
+       but horizontal scroll is safer. */
+    .users-table-container {
+        margin: 0 -0.5rem;
+        /* Negative margin to let table touch edges */
+        border-radius: 0;
+        border-right: none;
+        border-left: none;
+    }
+}
+
+/* Statistics Columns */
+.users-table .stat-value {
+    font-weight: 600;
+}
+
+.users-table .stat-value.correct {
+    color: var(--color-success);
+}
+
+.users-table .stat-value.wrong {
+    color: var(--color-error);
+}
+
+.pass-rate {
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.pass-rate.high {
+    color: var(--color-success);
+    background-color: var(--color-success-light);
+}
+
+.pass-rate.medium {
+    color: #d97706;
+    background-color: rgba(245, 158, 11, 0.2);
+}
+
+.pass-rate.low {
+    color: var(--color-error);
+    background-color: var(--color-error-light);
+}
