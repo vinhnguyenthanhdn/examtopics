@@ -27,35 +27,36 @@ main {
 /* Filter Styles */
 .filter-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+    padding: 0.75rem 1.25rem;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 1.5rem;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .filter-group {
     display: flex;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0.4rem;
-    border-radius: 1rem;
-    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 0.25rem;
+    border-radius: 0.75rem;
+    gap: 0.25rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .filter-btn {
-    padding: 0.6rem 1.2rem;
+    padding: 0.4rem 0.8rem;
     border: none;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     background: transparent;
     color: var(--color-text-secondary);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
@@ -81,6 +82,7 @@ main {
 
 @media (max-width: 640px) {
     .filter-container {
+        flex-direction: column;
         padding: 1rem;
         gap: 1rem;
     }
