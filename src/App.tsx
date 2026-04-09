@@ -542,7 +542,7 @@ function App() {
                                 </button>
                             </div>
                             <div className="filter-stats">
-                                {filteredQuestions.length} / {questions.length} {language === 'vi' ? 'câu hỏi' : 'questions'}
+                                {currentIndex + 1} / {filteredQuestions.length} {language === 'vi' ? 'câu hỏi' : 'questions'}
                             </div>
                         </div>
 
