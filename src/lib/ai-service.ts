@@ -145,14 +145,21 @@ Format the response as follows:
 function getExplanationPrompt(question: string, options: string, correctAnswer: string, language: Language): string {
     const targetLang = language === 'vi' ? "Tiếng Việt" : "English";
 
-    let correctText = "N/A";
+    let correctText = "";
     const optionLines = options.split('\n');
-    for (const line of optionLines) {
-        if (line.startsWith(`${correctAnswer}.`)) {
-            correctText = line.replace(`${correctAnswer}. `, "");
-            break;
+    const correctLetters = correctAnswer.split('');
+    
+    const matchedTexts: string[] = [];
+    for (const letter of correctLetters) {
+        for (const line of optionLines) {
+            if (line.trim().startsWith(`${letter}.`)) {
+                matchedTexts.push(line.replace(`${letter}.`, "").trim());
+                break;
+            }
         }
     }
+
+    correctText = matchedTexts.length > 0 ? matchedTexts.join(' AND ') : "N/A";
 
     return `You are an Azure AI Specialist. 
 STRICT RULES:
