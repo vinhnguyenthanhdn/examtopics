@@ -132,6 +132,14 @@ const translations: Translations = {
         vi: 'Xem thảo luận trên ExamTopics',
         en: 'View on ExamTopics',
     },
+    btn_copy: {
+        vi: 'Sao chép',
+        en: 'Copy',
+    },
+    copied: {
+        vi: 'Đã sao chép!',
+        en: 'Copied!',
+    },
 };
 
 export function getText(language: Language, key: string): string {

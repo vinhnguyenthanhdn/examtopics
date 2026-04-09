@@ -34,6 +34,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     allQuestions
 }) => {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         if (userAnswer) {
@@ -79,6 +80,21 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         }
     };
 
+    const handleCopy = () => {
+        const textToCopy = `Question:
+${question.question}
+
+Options:
+${question.options.join('\n')}
+
+Please explain this question and provide the correct answer with reasoning.`;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    };
+
     const getOptionLetter = (option: string): string => {
         return option.split('.')[0].trim();
     };
@@ -106,9 +122,22 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         <div className="question-card card fade-in">
             {/* Header */}
             <div className="question-header">
-                <h2>
-                    {t('question_header')} {questionNumber}
-                </h2>
+                <div className="title-row-compact">
+                    <h2>
+                        {t('question_header')} {questionNumber}
+                    </h2>
+                    <button 
+                        className={`btn-copy-icon ${copied ? 'copied' : ''}`} 
+                        onClick={handleCopy} 
+                        title={t('btn_copy')}
+                    >
+                        {copied ? (
+                            <><span className="icon">✅</span> {t('copied')}</>
+                        ) : (
+                            <><span className="icon">📋</span> {t('btn_copy')}</>
+                        )}
+                    </button>
+                </div>
                 <div className="progress-bar">
                     <div
                         className="progress-fill"

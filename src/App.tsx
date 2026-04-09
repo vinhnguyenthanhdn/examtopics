@@ -23,6 +23,7 @@ function App() {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [language, setLanguage] = useState<Language>('vi');
+    const [filter, setFilter] = useState<'all' | 'text' | 'interactive'>('all');
     const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(true);
     const [authLoading, setAuthLoading] = useState(true);
@@ -277,7 +278,26 @@ function App() {
         localStorage.setItem('ai900_quiz_answers', JSON.stringify(userAnswers));
     }, [userAnswers]);
 
-    const currentQuestion = questions[currentIndex];
+    // Filter questions based on selected type
+    const filteredQuestions = questions.filter(q => {
+        const isInteractive = q.question.includes('HOTSPOT -') || 
+                            q.question.includes('DRAG DROP -') ||
+                            q.correct_answer === 'HOTSPOT_REVIEW';
+        
+        if (filter === 'text') return !isInteractive;
+        if (filter === 'interactive') return isInteractive;
+        return true;
+    });
+
+    // Ensure currentIndex is within bounds of filtered list
+    // If filter changes, we might need to adjust currentIndex
+    useEffect(() => {
+        if (currentIndex >= filteredQuestions.length && filteredQuestions.length > 0) {
+            setCurrentIndex(0);
+        }
+    }, [filter, filteredQuestions.length, currentIndex]);
+
+    const currentQuestion = filteredQuestions[currentIndex];
 
     const handleSubmitAnswer = (answer: string) => {
         const isCorrect = answer === currentQuestion.correct_answer;
@@ -427,20 +447,22 @@ function App() {
     };
 
     const handleNext = () => {
-        if (currentIndex < questions.length - 1) {
+        if (currentIndex < filteredQuestions.length - 1) {
             const newIndex = currentIndex + 1;
             setCurrentIndex(newIndex);
             if (user) saveUserProgress(user.id, newIndex);
         }
     };
 
-    const handleJumpToQuestion = (index: number) => {
-        if (index >= 0 && index < questions.length) {
-            setCurrentIndex(index);
-            if (user) saveUserProgress(user.id, index);
-            setView('quiz'); // Switch back to quiz view
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    const handleJumpToQuestion = (index: number, resetFilter: boolean = false) => {
+        if (resetFilter) {
+            setFilter('all');
         }
+        
+        setCurrentIndex(index);
+        if (user) saveUserProgress(user.id, index);
+        setView('quiz'); // Switch back to quiz view
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     if (loading || authLoading) {
         return (
@@ -488,7 +510,7 @@ function App() {
                     <HistoryPage
                         userId={user.id}
                         questions={questions}
-                        onJumpToQuestion={handleJumpToQuestion}
+                        onJumpToQuestion={(idx) => handleJumpToQuestion(idx, true)}
                         onBack={() => setView('quiz')}
                     />
                 ) : !user ? (
@@ -497,10 +519,37 @@ function App() {
                     <PendingApproval language={language} />
                 ) : (
                     <>
+                        {/* Filter Selector */}
+                        <div className="filter-container fade-in">
+                            <div className="filter-group">
+                                <button 
+                                    className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                                    onClick={() => setFilter('all')}
+                                >
+                                    {language === 'vi' ? 'Tất cả' : 'All'}
+                                </button>
+                                <button 
+                                    className={`filter-btn ${filter === 'text' ? 'active' : ''}`}
+                                    onClick={() => setFilter('text')}
+                                >
+                                    {language === 'vi' ? 'Chỉ câu hỏi Text' : 'Text Only'}
+                                </button>
+                                <button 
+                                    className={`filter-btn ${filter === 'interactive' ? 'active' : ''}`}
+                                    onClick={() => setFilter('interactive')}
+                                >
+                                    {language === 'vi' ? 'Chỉ Drag Drop/Hotspot' : 'Hotspot/Drag-Drop'}
+                                </button>
+                            </div>
+                            <div className="filter-stats">
+                                {filteredQuestions.length} / {questions.length} {language === 'vi' ? 'câu hỏi' : 'questions'}
+                            </div>
+                        </div>
+
                         <QuestionCard
                             question={currentQuestion}
                             questionNumber={currentIndex + 1}
-                            totalQuestions={questions.length}
+                            totalQuestions={filteredQuestions.length}
                             language={language}
                             userAnswer={userAnswers[currentQuestion.id]}
                             onSubmit={handleSubmitAnswer}
@@ -532,7 +581,7 @@ function App() {
 
                         <Navigation
                             currentIndex={currentIndex}
-                            totalQuestions={questions.length}
+                            totalQuestions={filteredQuestions.length}
                             language={language}
                             onPrevious={handlePrevious}
                             onNext={handleNext}
