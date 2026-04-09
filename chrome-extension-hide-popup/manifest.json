@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Hide Popup Overlay",
+  "version": "1.0",
+  "description": "Automatically hides elements with class 'popup-overlay show'",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}
