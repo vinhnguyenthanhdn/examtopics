@@ -81,13 +81,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     };
 
     const handleCopy = () => {
-        const textToCopy = `Question:
+        const textToCopy = `bạn là huấn luyện viên luyện thi AI Azure, hãy giải thích từng term xuất hiện trong này, sau đó giải thích toàn bộ câu hỏi, cuối cùng search trên mạng để tìm tips trick khi gặp dạng câu hỏi này, giải thích bằng tiếng Việt:
+
+Question:
 ${question.question}
 
 Options:
 ${question.options.join('\n')}
 
-Please explain this question and provide the correct answer with reasoning.`;
+Correct Answer: ${question.correct_answer}`;
 
         navigator.clipboard.writeText(textToCopy).then(() => {
             setCopied(true);
