@@ -1,0 +1,11 @@
+/* 
+   Sử dụng CSS là cách nhẹ nhất để ẩn các phần tử. 
+   Trình duyệt sẽ tự động áp dụng quy tắc này mà không tốn CPU thực thi JavaScript.
+*/
+.popup-overlay.show {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
